@@ -11,6 +11,7 @@ Voir fichier Resnet50.txt
 Voir dossier HOG_CNN, fichier efficientnet.txt
 
 ### CNN + Xgboost
+Voir fichier rtf pour modele CNN + Xgboost
 
 
 ### ViT
