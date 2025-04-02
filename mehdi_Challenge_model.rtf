@@ -1,0 +1,25 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2818
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 .SFNS-Regular;\f1\froman\fcharset0 TimesNewRomanPSMT;\f2\fnil\fcharset0 HelveticaNeue-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red14\green14\blue14;}
+{\*\expandedcolortbl;;\cssrgb\c6700\c6700\c6700;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 D\'92abord, j\'92ai commenc\'e9 par analyser mon probl\'e8me de classification multi-classes. J\'92ai constat\'e9 que les classes \'e9taient d\'e9s\'e9quilibr\'e9es, ce qui pouvait rendre l\'92apprentissage difficile pour un mod\'e8le unique. J\'92ai donc d\'e9cid\'e9 d\'92aborder le probl\'e8me en deux \'e9tapes compl\'e9mentaires :\
+\pard\tqr\tx260\tx420\li420\fi-420\sl324\slmult1\sb240\partightenfactor0
+
+\f1 \cf2 	1.	
+\f2\b Le mod\'e8le CNN :
+\f0\b0 \
+J\'92ai choisi d\'92utiliser un CNN, et plus pr\'e9cis\'e9ment une architecture bas\'e9e sur ResNet50, car ce mod\'e8le a fait ses preuves sur de nombreuses t\'e2ches de vision par ordinateur. J\'92ai adapt\'e9 ResNet50 en retirant la partie \'ab top \'bb et en ajoutant une couche de GlobalAveragePooling suivie d\'92une couche Dense \'e0 512 neurones avec activation ReLU. Cette configuration me permet d\'92extraire des repr\'e9sentations riches et discriminantes des images.\
+Pour g\'e9rer le d\'e9s\'e9quilibre entre les classes, j\'92ai impl\'e9ment\'e9 une fonction qui calcule des poids de classes liss\'e9s en fonction de leur fr\'e9quence. Ainsi, j\'92ai pu ajuster l\'92importance des classes moins repr\'e9sent\'e9es, ce qui a permis d\'92am\'e9liorer la capacit\'e9 du mod\'e8le \'e0 apprendre sur des classes rares. Ensuite, j\'92ai entra\'een\'e9 ce CNN sur l\'92ensemble complet des donn\'e9es (full_ds) sans validation, pour maximiser l\'92apprentissage sur toutes les images disponibles, tout en surveillant la m\'e9trique personnalis\'e9e F1Macro gr\'e2ce \'e0 des callbacks comme ModelCheckpoint et ReduceLROnPlateau.\
+
+\f1 	2.	
+\f2\b Le mod\'e8le XGBoost :
+\f0\b0 \
+Une fois le CNN entra\'een\'e9, j\'92ai tir\'e9 parti de sa capacit\'e9 \'e0 extraire des caract\'e9ristiques en utilisant le mod\'e8le comme un \'ab feature extractor \'bb. J\'92ai ainsi r\'e9cup\'e9r\'e9 la sortie de la 3\'e8me derni\'e8re couche (la couche Dense \'e0 512 neurones) pour obtenir des vecteurs de caract\'e9ristiques.\
+Ces features, riches et d\'e9j\'e0 tr\'e8s informatives, ont ensuite \'e9t\'e9 utilis\'e9es pour entra\'eener un classificateur XGBoost. J\'92ai opt\'e9 pour XGBoost car il est particuli\'e8rement performant sur des donn\'e9es tabulaires et permet d\'92optimiser facilement ses hyperparam\'e8tres. Pour ce faire, j\'92ai mis en place une recherche d\'92hyperparam\'e8tres avec Optuna en divisant mon dataset en un split train/validation. J\'92ai \'e9galement appliqu\'e9 une surpond\'e9ration aux classes sp\'e9cifiques (par exemple, j\'92ai attribu\'e9 un poids de 3.0 \'e0 la classe 4 et \'e0 la classe 7) afin d\'92augmenter leur influence lors de l\'92entra\'eenement du mod\'e8le.J\'92ai \'e9galement utiliser une recherche Optuna pour trouver les meilleurs hyperparametres pour maximiser la F1 macro.\
+Ce qui m\'92a motiv\'e9 \'e0 combiner ces deux approches, c\'92est la compl\'e9mentarit\'e9 de leurs forces : le CNN excelle dans l\'92extraction de caract\'e9ristiques complexes \'e0 partir d\'92images, tandis que XGBoost, gr\'e2ce \'e0 sa capacit\'e9 d\'92optimisation fine et sa robustesse sur des donn\'e9es tabulaires, permet d\'92obtenir une meilleure g\'e9n\'e9ralisation pour la classification finale. En somme, cette approche hybride m\'92a permis d\'92optimiser mon pipeline et de maximiser le macro F1 score, une m\'e9trique essentielle pour \'e9valuer la performance globale sur un probl\'e8me de classification multi-classes.\
+Ce modele combin\'e9 a obtenu un bon score sur Kaggle de 0,60.\
+}
