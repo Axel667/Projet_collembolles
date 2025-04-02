@@ -1,0 +1,5 @@
+Dans le notebook explore, nous essayons d'appliquer différentes transformations aux données et de voir les effets sur les performances des modèles. Dans un premier temps nous avons essayé un HOG pour obtenir un score de base à battre avec des résau de neuronnes plus complexes.
+
+Puis nous avons importe un EfficientNet, un CNN pré entraine avec peu de paramètres (<5 Millions) ce qui permet un réentrainement rapide avec notre jeu de données. Nous avons rajouté 4 couches, une première Dense pour passer d'un vecteur de 128 puis une couche batch normalisation et une prelu, choisi pour leur stabilisation de l'entrainement. Puis une deuxième couche Dense pour passer de 128 à 9 pour obtenir les prédictions.
+
+Le script est composé de différentes partie pour charger les jeux de données, entrainement le modèle sur 60% du dataset et l'évaluer, ce qui permet d'enregister les performances et différentes métriques sur tensorboard. Puis une autre partie pour entrainer le modèle sur l'ensemble du jeu de données et pour inférer.
