@@ -1,0 +1,23 @@
+Notebook ConvNeXt-base (224x224) :
+========================================================
+- Chargement et prétraitement des images 
+-- find_random_patch_no_overlap()
+--- ajout de bounding box aleatoires sur des surfaces des images 
+    non couverts par d'autres bbox
+
+- Les images sont utilisees en 3 canaux RGB.
+
+- Crop suivant la bounding box correspondant à l’annotation YOLO+ 
+
+- Redimensionnement et normalisation des valeurs de pixel suivant 
+  les moyennes et écarts-types d’ImageNet.
+
+- flip horizontal/vertical par batch.
+
+- definition du modele 
+-- GlobalAveragePooling2D, puis une Dense pour la classification finale.
+
+- Entrainement du modèle avec un optimiseur AdamW, 
+  loss “sparse_categorical_crossentropy”.
+
+- application des inferences et predictions

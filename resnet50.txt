@@ -1,0 +1,7 @@
+Notebook Resnet-50 (800x800) :
+========================================================
+- Chargement et prétraitement des images 
+
+- Les images sont utilisees en 3 canaux RGB
+
+- flip horizontal/vertical par batch.
